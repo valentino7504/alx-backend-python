@@ -6,7 +6,7 @@ concat function with type hints
 '''
 
 
-def add(str1: str, str2: str) -> str:
+def concat(str1: str, str2: str) -> str:
     '''
     concat two strings
     '''
