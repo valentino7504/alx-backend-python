@@ -5,7 +5,7 @@ tests the client module
 
 '''
 import unittest
-from unittest.mock import patch, PropertyMock
+from unittest.mock import patch, PropertyMock, Mock
 from parameterized import parameterized
 from client import GithubOrgClient
 
@@ -32,3 +32,18 @@ class TestGithubOrgClient(unittest.TestCase):
             mock.return_value = res
             instance = GithubOrgClient('algorithmia')
             self.assertEqual(instance._public_repos_url, res['repos_url'])
+
+    @patch('client.get_json')
+    def test_public_repos(self, mock_get: Mock):
+        '''test public repos method'''
+        get_return = [{'name': 'test_string'}, {'name': 'test_string2'}]
+        mock_get.return_value = get_return
+        att = '_public_repos_url'
+        with patch.object(GithubOrgClient,
+                          att, new_callable=PropertyMock) as mock:
+            res = get_return
+            mock.return_value = res
+            cli = GithubOrgClient('algorithmia')
+            self.assertEqual(cli.public_repos(), [rep['name'] for rep in res])
+            mock.assert_called_once()
+        mock_get.assert_called_once()
