@@ -10,7 +10,7 @@ from utils import access_nested_map
 from typing import Mapping, Iterable, Any
 
 
-class TestAcessNestedMap(unittest.TestCase):
+class TestAccessNestedMap(unittest.TestCase):
     '''test access nested map'''
     @parameterized.expand([
         ({"a": 1}, ("a",), 1),
